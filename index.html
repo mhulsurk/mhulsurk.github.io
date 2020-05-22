@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  
+  
+	<title>LAXPC Help</title>
+	
+
+	
+	<style>
+		body, html {
+		  height: 100%;
+		  margin: 0;
+		}
+		
+		.bg {
+		  /* The image used */
+		  background-image: url("images/backimage.jpg");
+		
+		  /* Full height */
+		  height: 100%; 
+		
+		  /* Center and scale the image nicely */
+		  background-position: center;
+		  /*background-repeat: no-repeat;*/
+		  background-size: cover;
+		}
+</style>
+
+</head>
+<body class="bg" >
+
+		<div class="container">
+			<h3><font color="#0020C2" >Steps of LAXPC data analysis using LAXPC software (Format A) available at link <a target="_blank" href="http://astrosat-ssc.iucaa.in/?q=laxpcData" >http://astrosat-ssc.iucaa.in/?q=laxpcData </a> </font> </h3><br>	  	
+		  	<!-- #729fcf #4a74a1 #204a87-->
+		  	<div><h4><font  color="#000080" >Software having individual routines to extract spectra,light curves, power spectra, energy and frequency dependent time-lag, Dynamic power spectra, flux resolved spectroscopy, faint source background estimation (May 19 2018 version). Prior to software installation it it mandatory to install heasoft in your system (<a target="_blank" href="https://heasarc.gsfc.nasa.gov/docs/software.html" >https://heasarc.gsfc.nasa.gov/docs/software.html</a>).
+					</font>
+				</h4>
+			</div>
+			<br/>
+	
+		  	<ul>
+		  		<li style="color:#729fcf;margin-bottom: 2px; margin-top: 2px;"><font style="font-weight:bold;" size="3"  color="#4a74a1" >Configuring the software 				
+					<a data-toggle="modal" href="#help1" >[README]</a></font>			
+					<ol type="I">						
+						<li >Create a Directory in your home (or anywhere else) called LAXPCsoftware</li>						
+						<li >untar the tar file 'laxpcsoft.tar.gz' in the LAXPCsoftware directory e.g. /home/yourname/LAXPCsoftware/</li>						
+						<li > Put the following commands in the .bashrc file located at you home directory <br/> export LAXPCSOFT="/home/yourname/LAXPCsoftware/" <br/>  export LAXPCPATH="$LAXPCSOFT/LAXPC_CAL/" <br/> export PATH="$PATH:$LAXPCSOFT/laxpc_bin" </li>						
+						<li > Open a new terminal </li>						
+						<li > In LAXPCsoftware run the command : <br/> ./Configure <br/> (A succesful configuration will give no errors or statements.) <br/> But if there is error statement then use command : <br/>  ./Configure_curl </li>						
+					</ol>
+				</li>					
+				<br/>
+				<li style="color:#729fcf;margin-bottom: 2px; margin-top: 2px;"><font style="font-weight:bold;"  size="3" color="#4a74a1" >Data Analysis Procedure</font>
+					<p> You can download publicly available LAXPC data from the webpage <br/>
+						https://astrobrowse.issdc.gov.in/astro_archive/archive/Search-Record.jsp <br/>
+						Sample source is crab data (observation id : 9000000778, observation date : 8th November 2019)
+					</p>
+					<ol type="I">
+						<li > <font style="font-weight:bold;" >Create a data folder </font> <br/>    
+							User should create a data folder to store  unziped level 1 laxpc data<br/>
+							>mkdir laxpc_data<br/>
+							Path of data folder is : /home/user_name/walkthrough/LAXPC/laxpc_data<br/>
+							>cd /home/user_name/walkthrough/LAXPC/laxpc_data<br/>
+							> ls<br/>
+							LEVL1AS1LXP20161108A02_090T01_9000000778_06050.zip  LEVL1AS1LXP20161108A02_090T01_9000000778_06051.zip<br/>
+							This will create a folder 20161108_A02_090T01_9000000778_level1.
+						</li>
+						<li > <font style="font-weight:bold;" >Unzip level 1 data files </font> <br/>    
+								>unzip LEVL1AS1LXP20161108A02_090T01_9000000778_06050.zip <br/>
+								>unzip LEVL1AS1LXP20161108A02_090T01_9000000778_06051.zip <br/>
+								INTIALIZE HEASOFT (heainit in the terminal)
+
+						</li>
+						<li > <font style="font-weight:bold;" >Now create an analysis folder (working directory) <a data-toggle="modal" href="#help1" >[README] </a> </font> <br/>    
+								>mkdir analysis_laxpc <br/>
+								Path of analysis directory is : /home/user_name/walkthrough/LAXPC/analysis_laxpc
+						</li>
+						<li > <font style="font-weight:bold;" >Set the data path in the working directory <a data-toggle="modal" href="#help1" >[README] </a> </font> <br/>    
+								In the analysis_laxpc folder (Path: /home/user_name/walkthrough/LAXPC/analysis_laxpc) <br/>
+								set the variable $LAXPCDATAPATH to where your data is ending with the laxpc directory. <br/>
+								Example : <br/>
+								> export LAXPCDATAPATH="/home/user_name/walkthrough/LAXPC/laxpc_data/ 20161108_A02_090T01_9000000778_level1/laxpc/”
+						</li>
+						
+						<li > <font style="font-weight:bold;" >Make data file lists <a data-toggle="modal" href="#help1" >[README] </a> </font> <br/> 
+								Data file lists of level 1 data sets and the mkf file of each orbit may be listed in a txt file by giving the command  <br/>
+								> laxpc_make_filelist  <br/>
+								this will produce two text files "eventfiles" and "filterfiles". <br/>
+						</li>
+						<li > <font style="font-weight:bold;" > Check the content of eventfiles and filterfiles </font> <br/> 
+								Check the content of eventfiles and filterfiles for appropriate path of data and .mkf files.  <br/>
+								To check the content of the files type in terminal  <br/>
+								>more eventfile  <br/>
+								(eventfile is the list of all the level 1 event files of laxpc 10, 20 and 30.)  <br/>
+								>more filterfiles.   <br/>
+								(filterfiles is the list of all the level 1 .mkf files which stores the housekeeping information of each orbit file)  <br/>
+								Example:  <br/>
+								<font style="font-weight:bold;" > >more eventfiles </font>  <br/> 
+								"/home/user_name/walkthrough/LAXPC/laxpc_data/20161108_A02_090T01_9000000778_level1/laxpc//06050/lxp1/modeEA/AS1A02_090T01_9000000778lxp1EA_level1.fits"  <br/>
+								"/home/user_name/walkthrough/LAXPC/laxpc_data/20161108_A02_090T01_9000000778_level1/laxpc//06050/lxp2/modeEA/AS1A02_090T01_9000000778lxp2EA_level1.fits"  <br/>
+								"/home/user_name/walkthrough/LAXPC/laxpc_data/20161108_A02_090T01_9000000778_level1/laxpc//06050/lxp3/modeEA/AS1A02_090T01_9000000778lxp3EA_level1.fits"  <br/>
+								"/home/user_name/walkthrough/LAXPC/laxpc_data/20161108_A02_090T01_9000000778_level1/laxpc//06051/lxp1/modeEA/AS1A02_090T01_9000000778lxp1EA_level1.fits"  <br/>
+								"/home/user_name/walkthrough/LAXPC/laxpc_data/20161108_A02_090T01_9000000778_level1/laxpc//06051/lxp2/modeEA/AS1A02_090T01_9000000778lxp2EA_level1.fits"  <br/>
+								"/home/user_name/walkthrough/LAXPC/laxpc_data/20161108_A02_090T01_9000000778_level1/laxpc//06051/lxp3/modeEA/AS1A02_090T01_9000000778lxp3EA_level1.fits"  <br/>
+								<font style="font-weight:bold;" > >more filterfiles </font>  <br/>
+								"/home/user_name/walkthrough/LAXPC/laxpc_data/20161108_A02_090T01_9000000778_level1/laxpc//06050/AS1A02_090T01_9000000778lxp_level1.mkf"  <br/>
+								"/home/user_name/walkthrough/LAXPC/laxpc_data/20161108_A02_090T01_9000000778_level1/laxpc//06051/AS1A02_090T01_9000000778lxp_level1.mkf"  <br/>
+						</li>
+						<li > <font style="font-weight:bold;" > Make FITS event file  <a data-toggle="modal" href="#help1" >[README] </a> </font> <br/> 
+								To generate merged level2 event fits file from level 1 fits orbit file list (eventfiles) use the command laxpc_make_event  <br/> 
+								<font style="font-weight:bold;" > >laxpc_make_event eventfiles  </font>  <br/> 
+								this will produce a file called 'level2.event.fits'.   <br/> 
+								The level 2 event output file, level2.event.fits, is a fits file contains information of time of arrival, channel number, layer number of a laxpc unit, laxpc unit number and energy information of each X-ray photon.  <br/> 
+						</li>
+						<li > <font style="font-weight:bold;" > Make gti file  <a data-toggle="modal" href="#help1" >[README] </a> </font> <br/> 
+							<font style="font-weight:bold;" > >laxpc_make_stdgti filterfiles </font>  <br/>
+							This command will produce a file called 'usergti' which has the GOOD TIME INTERVALS   <br/>
+							(GTI)which removes earth occulation and SAA.   <br/>
+							(Note: "laxpc_make_occultgti filterfiles" will instead make occultgti  <br/>
+							having the time when the source was occulted).  <br/>
+							<font style="font-weight:bold;" > > laxpc_fluxresl_gti <a data-toggle="modal" href="#helpFluxReslGti" >  [README_FLUXRESLGTI] </a> </font> <br/>
+							Usage: laxpc_fluxresl_gti -l ratemin -h ratemax -o output_gti_filename filename.lc  <br/>
+							Flux resolved gti can also be created using the command. This task produces a GTI file corresponding to the times when the rate in the lightcurve was between a minimum value (ratemin) and  maximum value (ratemax).   <br/>
+							The output gti can then be used to generate spectrum and other science products as described in the following analysis steps.
+						</li>
+						<li > <font style="font-weight:bold;" > To make source spectrum  <a data-toggle="modal" href="#helpSpec" >[README_SPEC] </a> </font> <br/> 
+							Usage: laxpc_make_spectra   [-u (user gti asci file)] [-r resp_files] [-l Layer no] [-g Energy grouping factor] level2.event.fits  <br/>
+							Here, flag l is for the layer input. Options are either all or 1 which, means either all the 5 layers of LAXPC will be used for spectrum extraction or the layer 1 (Anode 1 and 2) will be used for spectrum extraction. <br/>							
+							If Layer 1 has been used as filter, then the files will have an additional _L1 in the filenames.   <br/>
+							The correct responses will be picked up by the code in Default mode. <br/>
+							Example: <br/> 
+							<font style="font-weight:bold;" > > laxpc_make_spectra -u usergti.fits level2.event.fits </font> <br/>
+							This command will generate spectrum of the source (example:spectrum_20.pha ) and  grouped spectrum (example: spectrum_grp_20.pha) of source. This will automatically select appropriate rmf (example: lx20cshm04v1.0.rmf) files for the data sets for each detector and copy it in current directory.
+						</li>
+						<li > <font style="font-weight:bold;" > To generate laxpc background spectrum  <a data-toggle="modal" href="#helpBackSpec" > [README_BACKSPEC] </a> </font> <br/> 
+							Usage: laxpc_make_backspectra -u (user gti file in fits format) -g gain -l layer -s syserr   <br/>
+							Prior to running this command it is MUST obtain source spectra (using command laxpc_make_spectra) first for the SAME usergti (good time interval file) and layer flags.   <br/>
+
+							Example:  <br/>
+
+							<font style="font-weight:bold;" > >laxpc_make_backspectra -u usergti.fits filterfiles  </font> <br/>
+
+							This command will generate simulated spectrum of the background (example: backlxp20.pha) for each detectors.  
+						</li>
+						<li > <font style="font-weight:bold;" > Create an energy input flle </font> <br/> 
+							User may create a energy input file for example eneinput and save the energy ranges as per science interest. <br/> 
+
+							<font style="font-weight:bold;" > >vi eneinput  </font> <br/> 
+
+							Example: <br/> 
+							Save two energy ranges in the file 3-5 keV and 5-20 keV  <br/> 
+
+							3.0 5.0 <br/> 
+							5.0 20.0 <br/> 
+
+							Note : you can define upto nine energy range in incremental order. The energy bands should not overlap i.e. 3-15 and 10-30
+						</li>
+						<li > <font style="font-weight:bold;" > To Make Lightcurves  <a data-toggle="modal" href="#helpLC" > [README_LC] </a> </font> <br/> 
+						
+							Usage: laxpc_make_lightcurve [-p (which pcu? all or e.g. 12)]  [-t timebin] [-u (user gti asci file)] [-o output filename]  [-e energy define file] [-l Layer no] level2.event.fits   <br/>
+							Example:  <br/>
+							To create lightcurves in 3-5keV and 5-20 keV energy bands, combining LAXPC 10 and 20, applying usergti file and 1 sec binning:   <br/>
+							>laxpc_make_lightcurve -p 12 -t 1.0 -u usergti.fits -e eneinput level2.event.fits  <br/>
+							Ouput files: lightcurve_3.0_5.0keV.lc and lightcurve_5.0_20.0keV.lc  <br/>
+							To create lightcurve from top layer of combined LAXPC 10 and 20  then the above command may be modified as:  <br/>
+							>laxpc_make_lightcurve -p 12 -t 1.0 -u usergti.fits -e eneinput -l 1 level2.event.fits  <br/>
+							Ouput files: lightcurve_3.0_5.0keV_L1.lc and lightcurve_5.0_20.0keV_L1.lc  <br/>
+							(User can plot the lightcurves using ftools fv, fplot or lcurve in heasoft.)
+						</li>
+						<li > <font style="font-weight:bold;" > To Make Background Lightcurves   <a data-toggle="modal" href="#helpBackLC" > [README_BACKLC] </a> </font> <br/> 
+							Usage: laxpc_make_backlightcurve -p (which pcu? all or e.g. 12) 	-t timebin -u user_gti_file -e energy define file -l Layer no -s syserr filterfiles  <br/> 
+							To run this command you MUST obtain source and background spectra first for the SAME usergti file and layer. Run laxpc_make_spectra and laxpc_find_back with the same -u and -l flags BEFORE running this command. <br/> 
+							Example: <br/> 
+							To generate background lightcurves in 3-5keV and 5-20 keV energy bands, combining LAXPC10 and 20, applying usergti file and 1 sec binning:  <br/> 
+							<font style="font-weight:bold;" > >laxpc_make_backlightcurve -p 12 -t 1.0 -u usergti.fits -e eneinput filterfiles </font> <br/> 
+							Ouput files: Back_lightcurve_3.0_5.0keV.lc and Back_lightcurve_5.0_20.0keV.lc <br/> 
+							The layer 1 LAXPC 10 or LAXPC 20 background for faint sources where the source contribution to the 50-80 keV count rate is less than 0.25 counts/sec (15 milli-crabs or 6 × 10−9 ergs/s/cm2). In such cases the observed 50-80 keV count rate can be used to estimate 
+							the background spectrum and lightcurve using the set of steps explained in the readme file <font style="font-weight:bold;" > [
+							<a data-toggle="modal" href="#helpBackLCFL10" > README_BACKSPEC_F_L10 </a>, <a data-toggle="modal" href="#helpBackLCFL20" > README_BACKLCF_L20</a>.] </font>  <br/> 
+							Note that the background lightcurve will always be of 100 second time bin.
+						</li>
+						<li > <font style="font-weight:bold;" > To generate energy dependent Time Lags   <a data-toggle="modal" href="#helpFreqLag" > [README_FREQLAG] </a> </font> <br/> 
+							Usage: laxpc_find_freqlag  [-h (high frequency in Hz)] [-l (low frequency in Hz)] [-f (Frequency at which  lags are to be computed in Hz)][-p (which pcu? all or e.g. 12)] [-u (user gti asci file)] [-o output filename]  [-e energy define file] level2.events.fits  <br/>
+							Example:  <br/>
+							laxpc_find_freqlag -l 0.1 -h 500.0 -f 30.0 -p 12 -u usergti.fits -e eneinput level2.event.fits  <br/>
+							This command will search the range of frequency in the range : lower frequency 0.1 Hz to higher frequency 500 Hz around the peak frequency 30 Hz. To search time lag PCU 1 and 2 are used. The output file "NPow_outputfile” denotes the energy ranges used. For N=1, 2 File containing information for a particular energy band. For example If the selected energy range is 3-5 keV and 5-20 keV then 1Pow_outputfile denotes the power spectrum in 3-5 keV energy band and 2Pow_outputfile in 5-20 keV energy band.
+							If there is no energy range input from the user then the default energy ranges are 3-15 and 15-30 keV.  <br/>
+							Different columns in the output file are:  <br/>
+							1 Mid Point Energy (keV) should be same for all rows  <br/>
+							2 Energy Range (keV) should be same for all rows  <br/>
+							3 Freq  (Hz)  <br/>
+							4 Coherence  <br/>
+							5 Coherence error  <br/>
+							6 Time lag (secs)  <br/>
+							7 Error on time lag  <br/>
+							8 Power  <br/>
+							9 Error on Power  <br/>
+							10 Intrinsic coherence (i.e.dead time poisson fluction subtracted)  <br/>
+							11 Intrinsic Coherence error  <br/>
+							12 Poisson noise level for Power spectrum (Deadtime corrected)  <br/>
+						</li>
+						<li > <font style="font-weight:bold;" > laxpc_rebin_power <a data-toggle="modal" href="#helpRebinPower" > [README_rebin_power] </a> </font> <br/> 
+							Usage:  laxpc_rebin_power  [-s snr] [-h max freq bin] [-l min freq bin]   <br/>
+							Here flag s the signal to noise (SNR) ratio that the power spectra will be binned to. Default value is 5 snr. The flag h means the maximum frequency width which any bin will have irrespective of its SNR. Default value of flag h is 2.0. The flag l means the minimum frequency width which any bin will have irrespective of its SNR. Default value of flag l is 1.05.  <br/>
+							This command helps in rebining power density spectra (PDS) in frequency domain. Further it converts the PDS in equivalent .pha files compatible with XSPEC and allows the PDS to be fitted using XSPEC. 
+							<font style="font-weight:bold;" >   >laxpc_rebin_power powfiles  </font>  <br/>
+							Name of file being used: powfiles  <br/>
+							if, N=2 (N is the number of energy range used in laxpc_find_freqlag to generate PDS)  <br/>
+							1Pow_level2.event  <br/>
+							2Pow_level2.event  <br/>
+							powfile file is the list of the *Pow files created by running the time lag command laxpc_find_freqlag in the previous step.  <br/>
+							Output files: reb_backPow_level2.event.pha1 reb_backPow_level2.event.pha2, reb_pha1Pow_level2.event.rsp, reb_pha2Pow_level2.event.rsp, reb_Pow_level2.event.pha1, reb_Pow_level2.event.pha2						
+						</li>
+						
+					</ol>
+		  		</li>
+
+
+
+
+				<li style="color:#729fcf;margin-bottom: 2px; margin-top: 2px;"><font size="3" color="#4a74a1" ></font>
+				
+					<ol type="I">
+						<li > </li>
+					</ol>
+		  		</li>
+				
+				<li style="color:#729fcf;margin-bottom: 2px; margin-top: 2px;"><font size="3" color="#4a74a1" ></font>
+				
+					<ol type="I">
+						<li > </li>
+					</ol>
+		  		</li>
+				
+				<li style="color:#729fcf;margin-bottom: 2px; margin-top: 2px;"><font size="3" color="#4a74a1" ></font>
+				
+					<ol type="I">
+						<li > </li>
+					</ol>
+		  		</li>
+				
+				<li style="color:#729fcf;margin-bottom: 2px; margin-top: 2px;"><font size="3" color="#4a74a1" ></font>
+				
+					<ol type="I">
+						<li > </li>
+					</ol>
+		  		</li>
+		  	</ul>
+		  	
+		  
+		  		
+		  
+		  
+		</div>	
+
+
+  <div class="modal"  id="help1"  role="dialog" >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title">Configuring the software</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+			<embed type="text/html" src="help1.html" width="100%" height="725" >			
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>      
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal"  id="helpFluxReslGti"  role="dialog" >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title">Make gti file</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+			<embed type="text/html" src="helpFluxReslGti.html" width="100%" height="250" >			
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>      
+      </div>
+    </div>
+  </div>
+
+  <div class="modal"  id="helpSpec"  role="dialog" >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title">To make source spectrum</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+			<embed type="text/html" src="helpSpec.html" width="100%" height=800" >			
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>      
+      </div>
+    </div>
+  </div>
+
+  <div class="modal"  id="helpBackSpec"  role="dialog" >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title">To generate laxpc background spectrum</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+			<embed type="text/html" src="helpBackSpec.html" width="100%" height=600" >			
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>      
+      </div>
+    </div>
+  </div>
+
+  <div class="modal"  id="helpLC"  role="dialog" >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title">To Make Lightcurves </h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+			<embed type="text/html" src="helpLC.html" width="100%" height=1100" >			
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>      
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal"  id="helpBackLC"  role="dialog" >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title">To Make Background Lightcurves </h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+			<embed type="text/html" src="helpBackLC.html" width="100%" height=730" >			
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>      
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="modal"  id="helpBackLCFL10"  role="dialog" >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title">To Make Background Lightcurves </h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+			<embed type="text/html" src="helpBackLCFL10.html" width="100%" height=650" >			
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>      
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal"  id="helpBackLCFL20"  role="dialog" >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title">To Make Background Lightcurves </h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+			<embed type="text/html" src="helpBackLCFL20.html" width="100%" height=650" >			
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>      
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal"  id="helpFreqLag"  role="dialog" >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title">To generate energy dependent Time Lags  </h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+			<embed type="text/html" src="helpFreqLag.html" width="100%" height=2600" >			
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>      
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="modal"  id="helpRebinPower"  role="dialog" >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h4 class="modal-title">laxpc_rebin_power  </h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+			<embed type="text/html" src="helpRebinPower.html" width="100%" height=600" >			
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>      
+      </div>
+    </div>
+  </div>
+  
+
+ 
+
+</body>
+</html>
