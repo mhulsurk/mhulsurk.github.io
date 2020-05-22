@@ -1,0 +1,52 @@
+	
+	laxpc_make_backlightcurve -p (which pcu? all or e.g. 12)  <br/>
+	-t timebin -u user_gti_file  <br/>
+         -e energy define file -l Layer no -s syserr filterfiles  <br/>  <br/>
+
+	
+	NOTE: To run this command you MUST obtain source and
+	background spectra first
+	for the SAME usergti file and layer.  <br/> RUN laxpc_make_spectra
+	and laxpc_find_back with the same -u and -l flags BEFORE running
+	this command.  <br/>  <br/>
+
+
+ 	[-p (which pcu? all or e.g. 12)]: Which PCU units to be considered.   <br/>
+		1--> LAXPC 10 only, 12 ---> LAXPC 10 and 20, all --> All units.  <br/>
+		Default value is all  <br/>  <br/>
+
+	[-t timebin]: Time bin for lightcurve in seconds.   <br/>
+        	Default value is 10.0 seconds  <br/>  <br/>
+	
+	[-u (user gti file)]: Mandatory user gti file in FITS.  <br/>
+		    Default: usergti.fits  <br/>  <br/>
+	 
+	 
+	 
+	 [-e energy define file]: File containing energy ranges.  <br/>
+	     An example file is given. Default file name is 
+	     'eneinput'.   <br/> If file does not exist, default energy range
+	     chosen is a single lighcurve of 3-80 keV.  <br/>  <br/>
+
+	 [-l Layer no] Which of the five Layers to be considered.  <br/> 
+	  Default is all. At this version only a single  layer or all 
+	  can be considered.  <br/>  <br/>
+	  
+	    [-s syserr]  <br/>
+	 systematic error added to the background lightcurve.  <br/>
+	 Default is 0.02.  <br/>  <br/>
+
+	 Output:  <br/>  <br/>
+
+	 If the output root file is the default value of 'lightcurve'  <br/>
+	 the following files will be produced:  <br/>  <br/>
+
+	 (1) Back_lightcurve.txt: Ascii text File containing counts/sec with time  <br/>
+	 for the energy bands asked for. Useful for plotting and quick look.  <br/>
+
+	 (2) A series of Fits files of the form:  <br/>
+	 Back_lightcurve_Emin_EmaxkeV.lc  <br/>
+	 where Emin and Emax are the energy range asked for. 
+     
+    
+	

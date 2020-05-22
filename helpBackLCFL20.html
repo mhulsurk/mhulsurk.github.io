@@ -1,0 +1,39 @@
+
+Programme to find background lightcurve for Faint sources (see report) for LAXPC 20   <br/>
+
+Sevarel steps have to be done to run this programma  <br/>  <br/>
+
+1)  obtain a lightcurve in the 50 80 keV range for LAXPC 20 Layer 1 only  <br/>  <br/>
+
+laxpc_make_lightcurve -t 100. -u usergti -l 1 -p 2 -e eneinp level2.event.fits  <br/>  <br/>
+
+where eneinp is a file containing the following  <br/> 
+50.0 80.0  <br/>  <br/>
+
+2) Select only that GTI where the flux is within 14 and 19 c/s  <br/>  <br/> 
+
+laxpc_fluxresl_gti -l 14.0 -h 19.0 -o usergtia lightcurve_L1_50.0_80.0keV.lc  <br/>  <br/>
+
+3) Make lightcurve in 50-80 keV using the new gti file usergtia  <br/>  <br/>
+
+laxpc_make_lightcurve -t 100. -u usergtia -l 1 -p 2 -e eneinp level2.event.fits  <br/>  <br/>
+
+4) Create lightcurve using new GTI file  <br/>  <br/>
+
+laxpc_make_lightcurve -t XX -u usergtia -l 1 -p 2 -e eneyour level2.event.fits  <br/>  <br/>
+
+where XX is the time bin for which you want to create lightcurve and
+eneyour is the file having energy ranges that you want but MUST NOT
+have any enegy range above 30 keV.  <br/>  <br/>
+
+5) Create background lighcturve:  <br/>  <br/>
+
+laxpc_backlc_F_L20 -e eneyour lightcurve_L1_50.0_80.0keV.lc  <br/>  <br/>
+
+This will creat a background lightcurves: Back_lightcurve_L20_F_**_**keV.lc  <br/>
+where ** are the energy ranges specfied in the eneyour file.  <br/>  <br/>
+
+Note that the background lightcurve will always be of 100 second time bin
+
+
+

@@ -1,0 +1,61 @@
+	There are several optional flags:  <br/>  <br/>
+	
+	laxpc_make_spectra   [-u (user gti asci file)]   <br/> 
+         [-r resp_files] [-l Layer no] [-g Energy grouping factor] level2.event.FITS	  <br/>  <br/>
+
+	[-u (user gti file)]: Optional user gti file in FITS format  <br/>
+	    This can be produced either by "laxpc_make_stdgti" command 
+	    or by the user using "laxpc_make_lightcurve".   <br/>
+	    See README file and README_LC for details.  <br/>
+	    Default: none  <br/>  <br/>
+	 
+	 
+	 [-l Layer no] Which of the five Layers to be considered.  <br/>
+	    Default is all. At this version only first layer or all 
+	    can be considered.  <br/>  <br/>
+
+	 [-g Energy grouping factor] Energy grouping factor.  <br/>
+	    See details below. Default is 0.05  <br/>  <br/>
+
+
+	  [-r resp_files] ) OPTIONAL: The correct responses will be picked up   
+	  by the code in Default mode.   <br/>
+	  However, the user MAY provide a file containing the names of the response file.   <br/>
+	  The first no. is the number of the LAXPC(1,2,3) followed in the same row the name of the response file.   <br/>  <br/>
+
+	 Output:  <br/>  <br/>
+
+	
+	 The following files will be produced   <br/>  <br/>
+	  
+	  (1) spectrum_10.pha, spectrum_20.pha and spectrum_30.pha  <br/>  <br/>
+	  
+	  (3) spectrum_grp_10.pha, spectrum_grp_20.pha and spectrum_grp_30.pha  <br/>  <br/>
+
+	  If Layer 1 has been, the files will have an additional _L1 in their
+	  names.  <br/>  <br/>
+
+	  The last files are GROUPED in energy using grppha command.  <br/>
+	  See Note below:  <br/>  <br/>
+
+
+	  NOTE: The spectrum files contains all the Header information
+	of the event  file used. Additionally the responses if
+	provided are included. If usergti file has been given then the
+	usergti extention is added to the fits lightcurve file.   <br/>  <br/>
+	
+	Note on Grouping. LAXPC channels can be as many as 1024.
+	The energy range to be considered from say 3-80 keV will
+	have a large number of channels. However, the energy
+	resultion of LAXPC is approximately 15%. So it is
+	optimal to have three energy bins per resultion or
+	at 5% level. The code reads the channel to energy
+	conversion in the response file to group the
+	spectrum at 0.05 level which is the default. The
+	value can be changed by the flag -g . For example
+	-g 0.1 will group at 10% level. Grouping can be
+	shutoff (no group files produced) by -g 0.0
+	Using the grouped file for spectral fitting
+	is highly recommended.
+	
+	

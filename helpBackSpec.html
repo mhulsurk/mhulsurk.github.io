@@ -1,0 +1,35 @@
+	There are several optional flags:  <br/>  <br/>
+	
+	laxpc_make_backspectra -u (user gti  file) -g igain -l ilayer -s syserr  <br/>  <br/>
+
+	NOTE: To run this command you MUST obtain source spectra first
+	for the SAME usergti file and layer.   <br/> RUN laxpc_make_spectra
+	with the same -u and -l flags BEFORE.  <br/>  <br/>
+	
+
+	[-u (user gti file)]: Mandatory user gti file in FITS format  <br/>
+	    Default: usergti.fits  <br/>  <br/>
+		 
+	 
+	 [-l Layer no] Which of the five Layers to be considered.  <br/>
+	    Default is all. At this version only the first layer or all 
+	    can be considered.  <br/> 
+		Default: all  <br/>  <br/>
+
+	 [-g igain]  <br/>
+	 if igain = 0, the background data closest in time is chosen  <br/>
+	 if igain = 1, the background data closest in gain is chosen  <br/>
+	 Default: 0  <br/>  <br/>
+
+	 [-s syserr]  <br/>
+	 systematic error added to the background spectrum.  <br/>
+	 Default is 0.02.  <br/>  <br/>
+	 
+
+	 Output:  <br/>  <br/>
+
+	 Backgrpound spectra i.e. pha files  <br/>
+	 backlxp10.pha,  backlxp30.pha ,  backlxp30.pha   <br/>
+	 or  <br/>
+	  backlxp10_L1.pha,  backlxp20_L1.pha ,  backlxp30_L1.pha  <br/> 
+	  for layer 1  

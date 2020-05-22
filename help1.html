@@ -1,0 +1,84 @@
+Steps for configuring the software are: 
+<br/>
+1) Create a Diretory in your home (or anywhere else) called LAXPCsoftware
+<br/>
+2)	untar the tar file 'laxpcsoft.tar.gz' in the LAXPCsoftware directory e.g. /home/yourname/LAXPCsoftware/
+<br/>
+3) Put the following commands in the .bashrc file located at you home directory
+<br/>
+export LAXPCSOFT="/home/yourname/LAXPCsoftware/"
+<br/>
+export LAXPCPATH="$LAXPCSOFT/LAXPC_CAL/"
+<br/>
+export PATH="$PATH:$LAXPCSOFT/laxpc_bin"
+<br/>
+4)    Open a new terminal
+<br/>
+5) In LAXPCsoftware run the command <br/>
+   ./Configure
+<br/>
+Note if there are any errors
+<br/><br/>
+---------------------------------------------------------------------------
+<br/>
+	Analyzing data
+<br/>
+1) In a directory where you want to keep the results of the analysis
+   e.g. myresults_cygx1
+<br/>
+2)  Set the variable $LAXPCDATAPATH to where your data is ending with
+the laxpc directory..e.g.
+<br/>
+export LAXPCDATAPATH="/home/rmisra/Cyg_X1_new.dir/april2016/20160601_G05_191T01_9000000476_level1/laxpc/"
+<br/>
+3) Make data file lists by giving the command
+<br/>
+laxpc_make_filelist
+<br/>
+  this will produce two text files "eventfiles" and "filterfiles"
+<br/>
+4) Make FITS event file by giving the command
+laxpc_make_event eventfiles
+<br/>
+this will produce a file called 'level2.event.fits'. 
+<br/>
+5) Make gti file
+laxpc_make_stdgti filterfiles
+<br/>
+which will produce a file called 'usergti' which has the GOOD TIME INTERVALS 
+(GTI)which removes earth occulation and SAA. 
+(Note: "laxpc_make_occultgti filterfiles"  will instead make occultgti 
+having the time when the source was occulted).
+<br/>
+6) Now you can use the following codes to make lightcurve, spectra,
+power spectra and time-lags with flags defined..
+<br/>
+(A) To Make Lightcurves:
+laxpc_make_lightcurve  [see README_LC]
+<br/>
+(B) To Make Spectra:
+laxpc_make_spectra  [see README_SPEC]
+<br/>
+(C) To Make background spectra:
+laxpc_find_back       [see README_BACKSPEC]
+<br/>
+(D) To Make background lightcurves:
+laxpc_make_backlightcurve [see README_BACKLC]
+<br/>
+(E) To Make Power spectra, Time Lags as a function of energy and frequeny:
+laxpc_find_freqlag   [see README_TIMELAG]
+<br/>
+(F) To rebin power spectra and make them readable by Xspec:
+laxpc_rebin_power  [see README_rebin_power]
+<br/>
+(G) To Make Dynamic power spectra
+laxpc_dynpower   [see README_DYNPOW]
+<br/>
+(H) To Make Dynamic power spectra
+laxpc_fluxresl_gti   [see README_FLUXRESLGTI]
+<br/>
+(I) To create background and lightcurve using an alternate scheme for
+faint sources laxpc_backspectra_F_L20, laxpc_backlc_F_L20, laxpc_backspectra_F_L10, laxpc_backlc_F_L10  [see README_BACKSPEC_F_L10  README_BACKSPEC_F_L20  README_BACKLCF_L10 README_BACKLCF_L20 ]
+<br/>
+(J) To create xspec readable pha files for rms and phase lag as a function of energy: <br/>
+laxpc_make_lagrms_pha [See README_Make_Lagrms_pha]

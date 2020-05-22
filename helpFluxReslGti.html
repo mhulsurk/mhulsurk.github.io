@@ -1,0 +1,18 @@
+	laxpc_fluxresl_gti  <br/><br/>
+
+	Given a Fits lightcurve, produces a GTI file corresponding to 
+	the times when the rate in the lightcurve was between 
+	a minumium value (ratemin) and  maximum value (ratemax).  <br/>
+	The GTI file produced can then be used to generate spectra 
+	and other science products.   <br/>  <br/>
+	
+
+USAGE:  <br/>
+laxpc_fluxresl_gti -l ratemin -h ratemax -o output_gti_filename filename.lc  <br/>  <br/>
+
+Note: laxpc_make_spectra will always produce spectra with the same names, 
+such as spectrum_grp_lx10.pha etc. So to do flux resolved spectroscopy 
+it is best to create seperate directories for each flux level and 
+compute spectra and background spectra seperately in that directory using the 
+GTI file produced by this program.
+

@@ -1,0 +1,73 @@
+	
+	laxpc_make_lightcurve [-p (which pcu? all or e.g. 12)]  <br/>
+	[-t timebin] [-u (user gti asci file)] [-o output filename]   <br/>
+         [-e energy define file] [-l Layer no] level2.event.FITS  <br/>  <br/>
+
+	
+ 	[-p (which pcu? all or e.g. 12)]: Which PCU units to be considered.   <br/>
+		1--> LAXPC 10 only, 12 ---> LAXPC 10 and 20, all --> All units.  <br/>
+		Default value is all  <br/>  <br/>
+
+	[-t timebin]: Time bin for lightcurve in seconds.   <br/>
+        	Default value is 1.0 seconds  <br/>  <br/>
+	
+	[-u (user gti file)]: Optional user gti file   <br/>
+	    This can be either in:   <br/>
+	    (i) ascii giving start and stop times,  <br/>
+	    e.g.  A file 'usergti' containing:  <br/>
+	    500.3 3000.1  <br/>
+	    3500.0 4550.34  <br/>
+	    or  <br/>
+	    (ii) a Fits GTI file with START and STOP columns  <br/>
+	 
+	    The time can either be in absolute time or time relative to  <br/>
+	    Tstart. Both will be interpreted correctly.  <br/>  <br/>
+
+	    NOTE: a 'usergti.fits' file will be produced which means  <br/>
+	    that the earlier usergti.fits file will be overwritten!!  <br/>
+	    copy any earlier version is you want to save the earlier usergti.  <br/>  <br/>
+	    
+	    A ascii text file called lcusergti.txt is also produced  <br/>
+	    giving the GTI used. This can be more easily edited to  <br/>
+	    give more constrained user GTIs.  <br/>  <br/>
+
+	    Default: none  <br/>
+	 
+	 [-o output filename]: Root of output file name  <br/>
+	    Default: lightcurve  <br/>  <br/>
+	 
+	 [-e energy define file]: File containing energy ranges.  <br/>
+	     An example file is given. Default file name is  
+	     'eneinput'.   <br/> If file does not exist, default energy range 
+	     chosen is a single lighcurve of 3-80 keV.  <br/>  <br/>
+
+	 [-l Layer no] Which of the five Layers to be considered.  <br/>
+	  Default is all. At this version only a single  layer or all  
+	  can be considered.  <br/>  <br/>
+	  
+	     
+
+	 Output:  <br/>  <br/>
+
+	 If the output root file is the default value of 'lightcurve'  <br/>
+	 the following files will be produced:  <br/>  <br/>
+
+	 (1) lightcurve.txt: Ascii text File containing counts/sec with time 
+	 for the energy bands asked for. Useful for plotting and quick look.  <br/>  <br/>
+
+	 (2) A series of Fits files of the form:  <br/>
+	 lightcurve_Emin_EmaxkeV.lc  <br/>  
+	 where Emin and Emax are the energy range asked for.   <br/>  <br/>
+     
+     (3) If usergti ascii file has been given a corresponding   
+	 fits usergti file with absolute corresponding time.  <br/>  <br/>
+
+	
+
+	NOTE: The lightcurve files contains all the Header information
+	of the event  file used. Additionally the energy range is
+	put in as Emin, Emax and TIMEDEL and PCUS which notes which
+	PCUs were used. if usergti file has been given then the
+	usergti extention is added to the fits lightcurve file.
+
+	
